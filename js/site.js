@@ -26,7 +26,7 @@ var config = {
     joinattr:'PCODE',
     popupattr:'NAME_EN',
     title:'Syria Survey of Surveys',
-    description:'Syria Survey of Surveys: Dashboard showing all published assessments covering humanitarian needs arising from the Syria Crisis from 2013. We welcomes all information that could complement this portal. For more information, comments or questions please email Rdelafosse@redcross.org.uk. Click on the graphs and map to filter the data in the table to find the relevant surveys. Every record refers to a district covered by a specific assessment. View the latest data <a href="https://docs.google.com/spreadsheets/d/1QA0UGOJtk5pJ-0oY2-V0iXs21SGS5Qz51Ns8i3QP1UA/edit#gid=0">here</a>.',
+    description:'Syria Survey of Surveys: Dashboard showing all published assessments covering humanitarian needs arising from the Syria Crisis from 2013. We welcome all information that could complement this portal. For more information, comments or questions please email Rdelafosse@redcross.org.uk. Click on the graphs and map to filter the data in the table to find the relevant surveys. Every record refers to a district covered by a specific assessment. View the latest data <a href="https://docs.google.com/spreadsheets/d/1QA0UGOJtk5pJ-0oY2-V0iXs21SGS5Qz51Ns8i3QP1UA/edit#gid=0">here</a>.',
     admlevel:2,
     weeks:false
 }
