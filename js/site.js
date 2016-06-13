@@ -26,7 +26,7 @@ var config = {
     joinattr:'PCODE',
     popupattr:'NAME_EN',
     title:'Syria Survey of Surveys',
-    description:'Test description - and a <a href="http://notarealsite.com">link</a>',
+    description:'Syria Survey of Surveys: Dashboard showing all published assessments covering humanitarian needs arising from the Syria Crisis from 2013. We welcome all information that could complement this portal. For more information, comments or questions please email Rdelafosse@redcross.org.uk. Click on the graphs and map to filter the data in the table to find the relevant surveys. Every record refers to a district covered by a specific assessment. View the latest data <a href="https://docs.google.com/spreadsheets/d/1QA0UGOJtk5pJ-0oY2-V0iXs21SGS5Qz51Ns8i3QP1UA/edit#gid=0">here</a>.',
     admlevel:2,
     weeks:false
 }
@@ -44,16 +44,16 @@ function initDashboard(data,time,geom){
         });
         return p;
     }
-    
+
     function reduceRemove(p, v) {
          v['#sector+list'].forEach (function(val, idx) {
             p[val] = (p[val] || 0) - 1; //decrement counts
         });
         return p;
     }
-    
+
     function reduceInitial() {
-           return {};  
+           return {};
     }
 
     var monthChart = dc.barChart('#monthChart');
@@ -80,7 +80,7 @@ function initDashboard(data,time,geom){
         .valueAccessor(function(x){ return x;})
         .group(unique_count(surveyGroup))
         .formatNumber(function(x){ return Math.round(x);});
-        
+
     sectorGroup.all = function() {
             var newObject = [];
             for (var key in this) {
@@ -96,7 +96,7 @@ function initDashboard(data,time,geom){
 
     monthChart.width($('#monthChart').width())
         .height(110)
-        .dimension(monthDimension) 
+        .dimension(monthDimension)
         .group(monthGroup)
         .margins({top: 10, right: 50, bottom: 50, left: 30})
         .colors([color])
@@ -109,26 +109,26 @@ function initDashboard(data,time,geom){
                     chart.selectAll("g.x text")
                         .style("text-anchor", "end")
                         //.attr('dx', '0')
-                      
+
                         .attr('transform', "rotate(-45)");
                 })
 
     sectorChart.width($('#sectorChart').width())
         .height(510)
-        .dimension(sectorDimension) 
+        .dimension(sectorDimension)
         .group(sectorGroup)
         .margins({top: 10, right: 50, bottom: 40, left: 30})
             .colors(['#CCCCCC', color])
             .colorDomain([0, 1])
             .colorAccessor(function (d) {
                 return 1;
-            }) 
+            })
         .labelOffsetY(25)
         .elasticX(true)
         .xAxis().ticks(4);
 
     sectorChart.filterHandler (function (dimension, filters) {
-        dimension.filter(null);   
+        dimension.filter(null);
         if (filters.length === 0){
             dimension.filter(null);
         } else {
@@ -136,9 +136,9 @@ function initDashboard(data,time,geom){
                 for (var i=0; i < d.length; i++) {
                     if (filters.indexOf(d[i]) >= 0) return true;
                 }
-                return false; 
+                return false;
             });
-        return filters; 
+        return filters;
         }
     });
 
@@ -146,7 +146,7 @@ function initDashboard(data,time,geom){
             .dimension(mapDimension)
             .group(mapGroup)
             .center([0,0])
-            .zoom(8)    
+            .zoom(8)
             .geojson(geom)
             .colors(config.mapcolors)
             .colorDomain([0,4])
@@ -162,8 +162,8 @@ function initDashboard(data,time,geom){
                     c=1;
                 };
                 return c
-                
-            })           
+
+            })
             .featureKeyAccessor(function(feature){
                 return feature.properties[config.joinattr];
             }).popup(function(feature){
@@ -179,7 +179,7 @@ function initDashboard(data,time,geom){
             });
 
     dc.dataTable("#data-table")
-                .dimension(monthDimension)                
+                .dimension(monthDimension)
                 .group(function (d) {
                     if(d['#adm'+config.admlevel+'+name']==undefined){
                         return d['#adm'+config.admlevel];
@@ -190,23 +190,23 @@ function initDashboard(data,time,geom){
                 .size(650)
                 .columns([
                     function(d){
-                       return d['#date+week']; 
+                       return d['#date+week'];
                     },
                     function(d){
-                       return d['#org+lead']; 
+                       return d['#org+lead'];
                     },
                     function(d){
-                       return d['#meta+assessmenttitle']; 
+                       return d['#meta+assessmenttitle'];
                     },
                     function(d){
                         if(d['#sector+list'].length>4){
                             return 'Multisectoral'
                         }
-                       return d['#sector+list']; 
+                       return d['#sector+list'];
                     },
                     function(d){
                         if(d['#meta+url'].length!=0&&d['#meta+url'].length!=null){
-                            return '<a href="'+d['#meta+url']+'">Link to report</a>'; 
+                            return '<a href="'+d['#meta+url']+'">Link to report</a>';
                         }
                        return "No Link available"
                     }
@@ -225,7 +225,7 @@ function initDashboard(data,time,geom){
     $('#reset').css({'background':config.color,'color':'#ffffff','border-color':config.color});
 
     var map = mapChart.map();
-    
+
     zoomToGeom(map,geom);
 
     function unique_count(group) {
@@ -314,7 +314,7 @@ function deriveMonths(data){
         weeks.push(months[date.getMonth()]+" "+(date.getYear()-100));
     }
     console.log(weeks)
-    return weeks;    
+    return weeks;
 }
 
 function addMonths(data){
@@ -365,17 +365,17 @@ function hxlProxyToJSON(input,headers){
     return output;
 }
 
-var dataCall = $.ajax({ 
-    type: 'GET', 
+var dataCall = $.ajax({
+    type: 'GET',
     url: config.HXLProxyURL,
     dataType: 'json',
 });
 
 //load geometry
 
-var geomCall = $.ajax({ 
-    type: 'GET', 
-    url: config.geomURL, 
+var geomCall = $.ajax({
+    type: 'GET',
+    url: config.geomURL,
     dataType: 'json'
 });
 
@@ -389,19 +389,19 @@ $('#reset').css({'background':config.color,'color':'#ffffff','border-color':conf
 
 //extending date object for addMonths
 
-Date.isLeapYear = function (year) { 
-    return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)); 
+Date.isLeapYear = function (year) {
+    return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
 };
 
 Date.getDaysInMonth = function (year, month) {
     return [31, (Date.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
 };
 
-Date.prototype.isLeapYear = function () { 
-    return Date.isLeapYear(this.getFullYear()); 
+Date.prototype.isLeapYear = function () {
+    return Date.isLeapYear(this.getFullYear());
 };
 
-Date.prototype.getDaysInMonth = function () { 
+Date.prototype.getDaysInMonth = function () {
     return Date.getDaysInMonth(this.getFullYear(), this.getMonth());
 };
 
@@ -431,8 +431,8 @@ $.when(dataCall, geomCall).then(function(dataArgs, geomArgs){
         data = addWeeks(data);
     } else {
         var weeks = deriveMonths(data);
-        data = addMonths(data);        
-    }  
+        data = addMonths(data);
+    }
 
     initDashboard(data,weeks,geom);
 });
